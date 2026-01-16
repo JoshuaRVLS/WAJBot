@@ -3,12 +3,14 @@ import { ping } from './ping.js';
 import { sticker } from './sticker.js';
 import { toimg } from './toimg.js';
 import { everyone } from './everyone.js';
+import { meme } from './meme.js';
 
 export const commands: Command[] = [
     ping,
     sticker,
     toimg,
     everyone,
+    meme,
 ];
 
 export const commandMap = new Map<string, Command>();
