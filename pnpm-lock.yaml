@@ -14,12 +14,18 @@ importers:
       '@whiskeysockets/baileys':
         specifier: 7.0.0-rc.9
         version: 7.0.0-rc.9(sharp@0.34.5)
+      node-webpmux:
+        specifier: ^3.2.1
+        version: 3.2.1
       pino:
         specifier: ^10.2.0
         version: 10.2.0
       qrcode-terminal:
         specifier: ^0.12.0
         version: 0.12.0
+      sharp:
+        specifier: ^0.34.5
+        version: 0.34.5
     devDependencies:
       '@types/node':
         specifier: ^25.0.9
@@ -518,6 +524,9 @@ packages:
   music-metadata@11.10.6:
     resolution: {integrity: sha512-Wb1EigQ3/Z7zrQl0XP16ipxB+rN0J0CHUTbTRtVu9GViALYafb6xT5UGzIfszCG1lscmkutjHO2RYbJ9TFyslA==}
     engines: {node: '>=18'}
+
+  node-webpmux@3.2.1:
+    resolution: {integrity: sha512-MKgpq9nFgo44pIVNx/umD3nkqb2E8oqQTfmstVsfNdx9uV4cX7a4LqA+d8AZd3v5tgJXwENKUFsXNP3bRLP8nQ==}
 
   on-exit-leak-free@2.1.2:
     resolution: {integrity: sha512-0eJJY6hXLGf1udHwfNftBqH+g73EU4B504nZeKpz1sYRKafAghwxEJunB2O7rDZkL4PGfsMVnTXZ2EjibbqcsA==}
@@ -1037,6 +1046,8 @@ snapshots:
       win-guid: 0.1.3
     transitivePeerDependencies:
       - supports-color
+
+  node-webpmux@3.2.1: {}
 
   on-exit-leak-free@2.1.2: {}
 

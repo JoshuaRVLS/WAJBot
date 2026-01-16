@@ -1,8 +1,14 @@
 import { Command } from '../types/command.js';
 import { ping } from './ping.js';
+import { sticker } from './sticker.js';
+import { toimg } from './toimg.js';
+import { everyone } from './everyone.js';
 
 export const commands: Command[] = [
     ping,
+    sticker,
+    toimg,
+    everyone,
 ];
 
 export const commandMap = new Map<string, Command>();

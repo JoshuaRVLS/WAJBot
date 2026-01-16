@@ -5,8 +5,11 @@ export async function handleMessage(sock: WASocket, messages: WAMessage[]) {
     for (const msg of messages) {
         if (!msg.message) continue;
 
-        // Handle text messages (simple and extended)
-        const text = msg.message.conversation || msg.message.extendedTextMessage?.text;
+        // Handle text messages (conversation, extended text, and media captions)
+        const text = msg.message.conversation ||
+            msg.message.extendedTextMessage?.text ||
+            msg.message.imageMessage?.caption ||
+            msg.message.videoMessage?.caption;
 
         if (!text || !text.startsWith('!')) continue;
 
