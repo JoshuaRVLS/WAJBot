@@ -18,6 +18,8 @@ pnpm-debug.log*
 # OS
 .DS_Store
 Thumbs.db
+*.db
+*.db-journal
 
 # Sessions
 .wwebjs_auth/
