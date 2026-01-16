@@ -66,7 +66,7 @@ export const meme: Command = {
         try {
             const stickerBuffer = await sharp(buffer)
                 .resize(512, 512, {
-                    fit: 'cover', // Full/Zoomed by default as requested
+                    fit: 'cover', // Full/Zoomed by default
                     background: { r: 0, g: 0, b: 0, alpha: 0 }
                 })
                 .composite([{
