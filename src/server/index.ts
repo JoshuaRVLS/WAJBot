@@ -5,6 +5,7 @@ import { createServer } from 'http';
 import { initSocket } from '../utils/socket.js';
 import { connectToWhatsApp, disconnectWhatsApp, reconnectWhatsApp, getBotStatus } from '../services/socket.js';
 import { commands } from '../commands/index.js';
+import { prisma } from '../utils/db.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -41,6 +42,19 @@ export function startServer() {
     app.post('/api/bot/restart', (req, res) => {
         reconnectWhatsApp();
         res.json({ success: true });
+    });
+
+    app.get('/api/bot/logs', async (req, res) => {
+        try {
+            const logs = await prisma.messageLog.findMany({
+                take: 50,
+                orderBy: { timestamp: 'desc' },
+            });
+            res.json(logs.reverse()); // Send oldest first for correct appending order in UI
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Failed to fetch logs' });
+        }
     });
 
     app.get('/', (req, res) => {
