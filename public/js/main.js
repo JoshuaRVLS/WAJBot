@@ -51,14 +51,59 @@ function updateButtons(status) {
     }
 }
 
+const createLogItem = (log) => {
+    const item = document.createElement('div');
+    item.className = 'log-item';
+
+    // Time
+    const time = new Date(log.timestamp || Date.now()).toLocaleTimeString();
+
+    // Sender resolution
+    let senderDisplay = log.sender.split('@')[0];
+    if (log.pushName) {
+        senderDisplay = `${log.pushName} (${senderDisplay})`;
+    }
+
+    // Group resolution
+    let prefix = '';
+    if (log.chatName) {
+        prefix = `[${log.chatName}] `;
+    } else if (log.sender.endsWith('@g.us')) {
+        prefix = '[Group] ';
+    }
+
+    item.innerHTML = `
+        <span class="log-time">[${time}]</span>
+        <strong>${prefix}</strong>
+        <span class="log-sender">${senderDisplay}:</span>
+        <span class="log-text">${log.content || log.text}</span>
+    `;
+    return item;
+};
+
 // Initial check
 updateButtons(statusSpan.innerText);
+
+// Load historical logs
+fetch('/api/bot/logs')
+    .then(res => res.json())
+    .then(data => {
+        if (!Array.isArray(data)) return;
+
+        if (data.length > 0 && logsDiv.innerText.includes('Waiting for messages...')) {
+            logsDiv.innerHTML = '';
+        }
+
+        data.forEach(log => {
+            logsDiv.prepend(createLogItem(log));
+        });
+    });
 
 // startTime is defined in the global scope by index.ejs
 
 socket.on('status_update', (status) => {
     statusSpan.innerText = status;
-    statusSpan.style.color = status === 'Online' ? 'green' : 'red';
+    statusSpan.className = status === 'Online' ? 'status online' : 'status offline';
     updateButtons(status);
 });
 
@@ -94,13 +139,6 @@ socket.on('msg_received', (data) => {
     if (logsDiv.innerText.includes('Waiting for messages...')) {
         logsDiv.innerHTML = '';
     }
-
-    const item = document.createElement('div');
-    item.className = 'log-item';
-    item.innerHTML = `
-        <span class="log-time">[${data.timestamp}]</span>
-        <span class="log-sender">${data.sender.split('@')[0]}:</span>
-        <span class="log-text">${data.text}</span>
-    `;
-    logsDiv.prepend(item);
+    // Use the shared createLogItem function for consistent rendering
+    logsDiv.prepend(createLogItem(data));
 });
