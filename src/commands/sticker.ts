@@ -5,8 +5,9 @@ import sharp from 'sharp';
 
 export const sticker: Command = {
     name: 'sticker',
-    aliases: ['s'],
-    description: 'Convert image to sticker',
+    description: 'Convert an image/video to a sticker',
+    usage: '!sticker [full/crop]',
+    aliases: ['s', 'stiker'],
     execute: async (sock, msg, args) => {
         const quotedMsg = msg.message?.extendedTextMessage?.contextInfo?.quotedMessage;
         const targetMsg = quotedMsg ? { message: quotedMsg } : msg;

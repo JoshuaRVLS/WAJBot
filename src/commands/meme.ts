@@ -18,8 +18,9 @@ function escapeXml(unsafe: string): string {
 
 export const meme: Command = {
     name: 'meme',
+    description: 'Create a meme with text overlay',
+    usage: '!meme Top Text | Bottom Text',
     aliases: ['smeme', 'stickerwithtext'],
-    description: 'Create a meme sticker',
     execute: async (sock, msg, args) => {
         const quotedMsg = msg.message?.extendedTextMessage?.contextInfo?.quotedMessage;
         const targetMsg = quotedMsg ? { message: quotedMsg } : msg;
