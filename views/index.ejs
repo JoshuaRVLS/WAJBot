@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= botName %> Dashboard
+    </title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <div class="card">
+        <h1>
+            <%= botName %>
+        </h1>
+        <p>Status: <span class="status" id="status">
+                <%= status %>
+            </span></p>
+        <p>Uptime: <span id="uptime">Calculating...</span></p>
+
+        <div class="controls">
+            <button class="btn-start" onclick="controlBot('start')">Start</button>
+            <button class="btn-stop" onclick="controlBot('stop')">Stop</button>
+            <button class="btn-restart" onclick="controlBot('restart')">Restart</button>
+        </div>
+
+        <h3>Commands</h3>
+        <table class="cmd-table">
+            <thead>
+                <tr>
+                    <th>Command</th>
+                    <th>Description</th>
+                    <th>Usage</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% commands.forEach(function(cmd) { %>
+                    <tr>
+                        <td class="cmd-name">!<%= cmd.name %>
+                        </td>
+                        <td>
+                            <%= cmd.description %>
+                        </td>
+                        <td><code class="cmd-usage"><%= cmd.usage || '' %></code></td>
+                    </tr>
+                    <% }); %>
+            </tbody>
+        </table>
+
+        <h3>Live Logs</h3>
+        <div id="logs">
+            <div style="text-align: center; color: #888; padding: 10px;">Waiting for messages...</div>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        // Pass server-side variable to global scope for main.js to use
+        const startTime = <%= startTime %>;
+    </script>
+    <script src="/js/main.js"></script>
+</body>
+
+</html>
