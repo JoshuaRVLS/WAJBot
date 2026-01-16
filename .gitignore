@@ -27,3 +27,4 @@ Thumbs.db
 auth_info_baileys/
 
 /src/generated/prisma
+prisma/migrations/
