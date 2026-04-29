@@ -8,6 +8,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "bot": "tsx src/index.ts",
+    "bot:pairing": "test -n \"$WA_PAIRING_PHONE\" || (echo \"Set WA_PAIRING_PHONE (digits only, include country code)\" && exit 1); tsx src/index.ts",
     "legacy:dev": "nodemon",
     "legacy:start": "tsx src/index.ts",
     "legacy:pairing": "test -n \"$WA_PAIRING_PHONE\" || (echo \"Set WA_PAIRING_PHONE (digits only, include country code)\" && exit 1); tsx src/index.ts"
