@@ -1,9 +1,9 @@
-import { Command } from '../types/command.js';
+import { Command } from '../types/command';
 
 export const ping: Command = {
     name: 'ping',
     description: 'Check the bot\'s latency',
-    usage: '!ping',
+    usage: '.ping',
     aliases: ['p'],
     execute: async (sock, msg, _args) => {
         const timestamp = typeof msg.messageTimestamp === 'number'

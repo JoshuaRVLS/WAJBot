@@ -1,48 +1,107 @@
-# WAJBot 🤖✨
+# WAJBot
 
-Yo! Welcome to **WAJBot**. This is a super cool WhatsApp bot that I built using Baileys. It's not just a boring script; it has a full-blown **Web Dashboard** to control it!
+WhatsApp bot built on Baileys with a Next.js 16 web dashboard for multi-session management.
 
-## Features 🚀
+## Web Stack
 
--   **Dashboard Control**: Start, Stop, and Restart the bot from your browser (`http://localhost:3000`).
--   **Real-time Logs**: See who's messaging you and what they're saying, right on the web.
--   **History**: We use SQLite so your logs are saved. Refresh the page and they're still there!
--   **Commands**:
-    -   `!sticker` (or `!s`): Make stickers from images/videos.
-    -   `!meme`: Add text to images like a pro.
-    -   `!everyone`: Tag everyone in a group (shh, don't abuse it).
-    -   `!toimg`: Turn stickers back into images.
-    -   `!ping`: Check if the bot is awake.
-    -   `!help`: See the menu.
+- Next.js 16
+- shadcn-style UI components
+- Tailwind CSS 4.x
+- Prisma + SQLite
 
-## How to Run 🏃‍♂️
+Note: Tailwind CSS `v6` is not an official release as of April 27, 2026. This project uses the current official Tailwind 4.x line instead.
 
-1.  **Install stuff**:
-    ```bash
-    pnpm install
-    ```
+## Web Features
 
-2.  **Setup Database**:
-    ```bash
-    npx prisma generate
-    npx prisma migrate dev --name init
-    ```
+- Multi-session management
+- Sessions Dashboard
+- Create new session
+- Start and stop session
+- Delete session
+- Session status and QR visibility
 
-3.  **Run it**:
-    ```bash
-    pnpm dev
-    ```
+## Commands
 
-4.  **Connect**:
-    -   Scan the QR code in your terminal.
-    -   Go to `http://localhost:3000` to see the magic.
+- `.ping`
+- `.help`
+- `.sticker`
+- `.toimg`
+- `.meme`
+- `.everyone`
+- `.tv`
+- `.tvanal`
+- `.saham`
 
-## Tech Stack 🛠️
+## Run
 
--   **Node.js**: The brain.
--   **Baileys**: The WhatsApp magic.
--   **Express + EJS**: The web dashboard.
--   **Socket.IO**: Real-time updates.
--   **Prisma + SQLite**: Saving your chats.
+1. Install dependencies:
 
-Enjoy the bot! Peace. ✌️
+```bash
+pnpm install
+```
+
+2. Generate Prisma client:
+
+```bash
+pnpm prisma generate
+```
+
+3. Start the dashboard:
+
+```bash
+pnpm dev
+```
+
+4. Open:
+
+```text
+http://localhost:3000
+```
+
+## Environment
+
+Current project `.env` supports:
+
+```env
+DATABASE_URL='file:./dev.db'
+WA_ALLOWED_CHATS=120363417180316944@g.us
+OPENROUTER_API_KEY=...
+```
+
+Optional env:
+
+```env
+OPENROUTER_TV_MODEL=x-ai/grok-4.1-fast
+OPENROUTER_TV_MAX_COMPLETION_TOKENS=520
+OPENROUTER_TV_SHOW_USAGE=true
+CHROME_PATH=/usr/bin/google-chrome
+```
+
+## Chat Restriction
+
+Use `WA_ALLOWED_CHATS` as a comma-separated allowlist:
+
+```bash
+WA_ALLOWED_CHATS=6281234567890@s.whatsapp.net,1203630xxxxxxx@g.us pnpm dev
+```
+
+- Private chat format: `<phone>@s.whatsapp.net`
+- Group format: `<group-id>@g.us`
+
+## Stock Commands
+
+- `.tv BBCA` opens TradingView and sends a chart screenshot.
+- `.saham BBCA` opens Google Finance and sends a chart screenshot.
+- `.tvanal` must be sent with an image caption or as a reply to an image.
+- Chrome or Chromium must be installed locally for `.tv` and `.saham`.
+- `OPENROUTER_API_KEY` is required for `.tvanal`.
+
+## Legacy Single-Session Scripts
+
+The old Express/single-session flow is kept only as fallback:
+
+```bash
+pnpm legacy:start
+pnpm legacy:dev
+pnpm legacy:pairing
+```

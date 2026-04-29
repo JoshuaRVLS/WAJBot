@@ -1,10 +1,10 @@
-import { Command } from '../types/command.js';
-import { commandMap } from './index.js';
+import { Command } from '../types/command';
+import { commandMap } from './index';
 
 export const help: Command = {
     name: 'help',
     description: 'Show available commands',
-    usage: '!help',
+    usage: '.help',
     aliases: ['menu', 'list'],
     execute: async (sock, msg, args) => {
         let text = '*🤖 WAJBot Commands*\n\n';
@@ -16,7 +16,7 @@ export const help: Command = {
             if (seen.has(cmd)) return;
             seen.add(cmd);
 
-            text += `*!${cmd.name}*\n`;
+            text += `*.${cmd.name}*\n`;
             if (cmd.description) text += `📝 _${cmd.description}_\n`;
             if (cmd.usage) text += `💡 Usage: ${cmd.usage}\n`;
             text += '\n';

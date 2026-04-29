@@ -30,3 +30,33 @@ export async function downloadMedia(msg: { message?: WAMessage['message'] }): Pr
         return null;
     }
 }
+
+export function unwrapMessageContent(message?: WAMessage['message']): WAMessage['message'] | undefined {
+    if (!message) return message;
+
+    if (message.viewOnceMessageV2?.message) {
+        return unwrapMessageContent(message.viewOnceMessageV2.message);
+    }
+
+    if (message.viewOnceMessage?.message) {
+        return unwrapMessageContent(message.viewOnceMessage.message);
+    }
+
+    if (message.ephemeralMessage?.message) {
+        return unwrapMessageContent(message.ephemeralMessage.message);
+    }
+
+    return message;
+}
+
+export function getTargetMessage(msg: WAMessage): { message?: WAMessage['message'] } {
+    const quotedMsg = msg.message?.extendedTextMessage?.contextInfo?.quotedMessage;
+    const baseMessage = quotedMsg ? quotedMsg : msg.message;
+    return { message: unwrapMessageContent(baseMessage) };
+}
+
+export function getImageMimeType(msg: { message?: WAMessage['message'] }): string | null {
+    const message = unwrapMessageContent(msg.message);
+    if (message?.imageMessage?.mimetype) return message.imageMessage.mimetype;
+    return null;
+}

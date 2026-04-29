@@ -1,16 +1,18 @@
-import { Server } from 'socket.io';
-import { Server as HttpServer } from 'http';
+type Emitter = {
+  emit: (event: string, payload: unknown) => void;
+};
 
-let io: Server | null = null;
+const noopEmitter: Emitter = {
+  emit: () => undefined,
+};
 
-export function initSocket(httpServer: HttpServer) {
-    io = new Server(httpServer);
-    return io;
+let io: Emitter = noopEmitter;
+
+export function initSocket(_server?: unknown) {
+  io = noopEmitter;
+  return io;
 }
 
 export function getIO() {
-    if (!io) {
-        throw new Error('Socket.io not initialized!');
-    }
-    return io;
+  return io;
 }

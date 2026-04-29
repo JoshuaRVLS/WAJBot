@@ -1,12 +1,12 @@
-import { Command } from '../types/command.js';
-import { downloadMedia } from '../utils/media.js';
-import { addExif } from '../utils/exif.js';
+import { Command } from '../types/command';
+import { downloadMedia } from '../utils/media';
+import { addExif } from '../utils/exif';
 import sharp from 'sharp';
 
 export const sticker: Command = {
     name: 'sticker',
     description: 'Convert an image/video to a sticker',
-    usage: '!sticker [full/crop]',
+    usage: '.sticker [full/crop]',
     aliases: ['s', 'stiker'],
     execute: async (sock, msg, args) => {
         const quotedMsg = msg.message?.extendedTextMessage?.contextInfo?.quotedMessage;
@@ -20,7 +20,7 @@ export const sticker: Command = {
         const buffer = await downloadMedia(targetMsg);
 
         if (!buffer) {
-            await sock.sendMessage(msg.key.remoteJid!, { text: 'Please reply to an image or send an image with caption !sticker' });
+            await sock.sendMessage(msg.key.remoteJid!, { text: 'Please reply to an image or send an image with caption .sticker' });
             return;
         }
 

@@ -2,10 +2,10 @@ import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { createServer } from 'http';
-import { initSocket } from '../utils/socket.js';
-import { connectToWhatsApp, disconnectWhatsApp, reconnectWhatsApp, getBotStatus } from '../services/socket.js';
-import { commands } from '../commands/index.js';
-import { prisma } from '../utils/db.js';
+import { initSocket } from '../utils/socket';
+import { connectToWhatsApp, disconnectWhatsApp, reconnectWhatsApp, getBotStatus } from '../services/socket';
+import { commands } from '../commands/index';
+import { prisma } from '../utils/db';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

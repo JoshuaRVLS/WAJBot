@@ -1,9 +1,9 @@
-import { Command } from '../types/command.js';
+import { Command } from '../types/command';
 
 export const everyone: Command = {
     name: 'everyone',
     description: 'Tag all participants in a group',
-    usage: '!everyone [message]',
+    usage: '.everyone [message]',
     aliases: ['tagall', 'hidetag'],
     execute: async (sock, msg, args) => {
         const remoteJid = msg.key.remoteJid;

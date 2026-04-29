@@ -1,13 +1,26 @@
 import { WAMessage, WASocket } from '@whiskeysockets/baileys'; // Import types
-import { commandMap } from '../commands/index.js';
-import { logger } from '../utils/logger.js';
-import { isIgnoredMessageId } from '../utils/ignore.js';
-import { getIO } from '../utils/socket.js';
-import { prisma } from '../utils/db.js';
+import { commandMap } from '../commands/index';
+import { logger } from '../utils/logger';
+import { isIgnoredMessageId } from '../utils/ignore';
+import { getIO } from '../utils/socket';
+import { prisma } from '../utils/db';
 
-import { getGroupName } from '../utils/cache.js';
+import { getGroupName } from '../utils/cache';
 
-export const handleMessage = async (sock: WASocket, messages: WAMessage[]) => {
+const COMMAND_PREFIX = '.';
+const ALLOWED_COMMAND_CHATS = new Set(
+    (process.env.WA_ALLOWED_CHATS || '')
+        .split(',')
+        .map((jid) => jid.trim())
+        .filter(Boolean)
+);
+
+const canRunCommandsInChat = (remoteJid: string) => {
+    if (ALLOWED_COMMAND_CHATS.size === 0) return true;
+    return ALLOWED_COMMAND_CHATS.has(remoteJid);
+};
+
+export const handleMessage = async (sock: WASocket, messages: WAMessage[], _sessionId?: string) => {
     for (const msg of messages) {
         if (!msg.message) continue;
         if (msg.key.id && isIgnoredMessageId(msg.key.id)) continue;
@@ -50,9 +63,13 @@ export const handleMessage = async (sock: WASocket, messages: WAMessage[]) => {
             logger.error(e, 'Failed to log message');
         }
 
-        if (!text || !text.startsWith('!')) continue;
+        if (!text || !text.startsWith(COMMAND_PREFIX)) continue;
+        if (!canRunCommandsInChat(remoteJid)) {
+            logger.info({ remoteJid }, 'Blocked command from non-allowed chat');
+            continue;
+        }
 
-        const [commandName, ...args] = text.slice(1).trim().split(/\s+/);
+        const [commandName, ...args] = text.slice(COMMAND_PREFIX.length).trim().split(/\s+/);
         const command = commandMap.get(commandName.toLowerCase());
 
         if (command) {

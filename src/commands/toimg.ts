@@ -1,11 +1,11 @@
-import { Command } from '../types/command.js';
-import { downloadMedia } from '../utils/media.js';
+import { Command } from '../types/command';
+import { downloadMedia } from '../utils/media';
 import sharp from 'sharp';
 
 export const toimg: Command = {
     name: 'toimg',
     description: 'Convert a sticker back to an image',
-    usage: '!toimg',
+    usage: '.toimg',
     aliases: ['toimage', 'img'],
     execute: async (sock, msg, _args) => {
         const quotedMsg = msg.message?.extendedTextMessage?.contextInfo?.quotedMessage;

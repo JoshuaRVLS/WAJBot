@@ -1,10 +1,13 @@
-import { Command } from '../types/command.js';
-import { ping } from './ping.js';
-import { sticker } from './sticker.js';
-import { toimg } from './toimg.js';
-import { everyone } from './everyone.js';
-import { meme } from './meme.js';
-import { help } from './help.js';
+import { Command } from '../types/command';
+import { ping } from './ping';
+import { sticker } from './sticker';
+import { toimg } from './toimg';
+import { everyone } from './everyone';
+import { meme } from './meme';
+import { help } from './help';
+import { tv } from './tv';
+import { tvanal } from './tvanal';
+import { saham } from './saham';
 
 export const commands: Command[] = [
     ping,
@@ -12,6 +15,9 @@ export const commands: Command[] = [
     toimg,
     everyone,
     meme,
+    tv,
+    tvanal,
+    saham,
     help,
 ];
 

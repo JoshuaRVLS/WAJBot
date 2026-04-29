@@ -1,6 +1,6 @@
-import { Command } from '../types/command.js';
-import { downloadMedia } from '../utils/media.js';
-import { addExif } from '../utils/exif.js';
+import { Command } from '../types/command';
+import { downloadMedia } from '../utils/media';
+import { addExif } from '../utils/exif';
 import sharp from 'sharp';
 
 function escapeXml(unsafe: string): string {
@@ -19,7 +19,7 @@ function escapeXml(unsafe: string): string {
 export const meme: Command = {
     name: 'meme',
     description: 'Create a meme with text overlay',
-    usage: '!meme Top Text | Bottom Text',
+    usage: '.meme Top Text | Bottom Text',
     aliases: ['smeme', 'stickerwithtext'],
     execute: async (sock, msg, args) => {
         const quotedMsg = msg.message?.extendedTextMessage?.contextInfo?.quotedMessage;
@@ -32,7 +32,7 @@ export const meme: Command = {
         const buffer = await downloadMedia(targetMsg);
 
         if (!buffer) {
-            await sock.sendMessage(msg.key.remoteJid!, { text: 'Please reply to an image or send an image with caption !meme text' });
+            await sock.sendMessage(msg.key.remoteJid!, { text: 'Please reply to an image or send an image with caption .meme text' });
             return;
         }
 

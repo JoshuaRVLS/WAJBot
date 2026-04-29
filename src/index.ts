@@ -1,5 +1,5 @@
-import { connectToWhatsApp } from './services/socket.js';
-import { startServer } from './server/index.js';
+import { connectToWhatsApp } from './services/socket';
+import { startServer } from './server/index';
 
 startServer();
 connectToWhatsApp();
